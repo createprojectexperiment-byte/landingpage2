@@ -1,0 +1,13 @@
+{
+  "functions": {
+    "api/*.js": {
+      "maxDuration": 10
+    }
+  },
+  "rewrites": [
+    { "source": "/", "destination": "/index.html" },
+    { "source": "/api/data", "destination": "/api/data.js" },
+    { "source": "/api/verify", "destination": "/api/verify.js" },
+    { "source": "/api/buy/(.*)", "destination": "/api/buy/[productId].js" }
+  ]
+}
