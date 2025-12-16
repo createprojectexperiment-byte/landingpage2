@@ -11,6 +11,7 @@ const WAIT_DURATION_MS = 10000;
 const TAP_RESET_MS = 1000;
 
 const Hero: React.FC<HeroProps> = ({ onUnlock, isAdmin }) => {
+    // Logika gesture dipindahkan ke sini agar tidak perlu import file luar yang bikin error
     const [tapCount, setTapCount] = useState(0);
     const tapTimeoutRef = useRef<number | null>(null);
     const waitTimeoutRef = useRef<number | null>(null);
@@ -80,5 +81,4 @@ const Hero: React.FC<HeroProps> = ({ onUnlock, isAdmin }) => {
         </section>
     );
 };
-
 export default Hero;
