@@ -51,10 +51,10 @@ const ProductsSection: React.FC<ProductsSectionProps> = ({ products, isAdmin, re
 
         try {
             await Promise.all(updatePromises);
-            toast.success('Product order updated successfully!');
+            toast.success('Urutan produk diperbarui!');
             refreshData();
         } catch (error) {
-            toast.error('Failed to update product order.');
+            toast.error('Gagal memperbarui urutan.');
             console.error(error);
         }
     }
@@ -70,21 +70,28 @@ const ProductsSection: React.FC<ProductsSectionProps> = ({ products, isAdmin, re
           </h2>
         </div>
 
-        <div className="space-y-8">
-            <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
-                <SortableContext items={products.map(p => p.id)} strategy={verticalListSortingStrategy}>
-                    {products.map((product, index) => (
-                        <ProductCard 
-                            key={product.id}
-                            product={product}
-                            isAdmin={isAdmin}
-                            onEdit={() => handleEdit(product)}
-                            refreshData={refreshData}
-                        />
-                    ))}
-                </SortableContext>
-            </DndContext>
-        </div>
+        {products.length === 0 ? (
+            <div className="text-center py-10 border-2 border-dashed border-gray-300 dark:border-gray-700 rounded-xl">
+                <p className="text-gray-500 dark:text-gray-400 text-lg">Belum ada produk yang ditampilkan.</p>
+                {isAdmin && <p className="text-sm text-brand-primary mt-2">Klik tombol di bawah untuk menambah produk.</p>}
+            </div>
+        ) : (
+            <div className="space-y-8">
+                <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
+                    <SortableContext items={products.map(p => p.id)} strategy={verticalListSortingStrategy}>
+                        {products.map((product) => (
+                            <ProductCard 
+                                key={product.id}
+                                product={product}
+                                isAdmin={isAdmin}
+                                onEdit={() => handleEdit(product)}
+                                refreshData={refreshData}
+                            />
+                        ))}
+                    </SortableContext>
+                </DndContext>
+            </div>
+        )}
 
         {isAdmin && (
           <div className="text-center mt-12">
